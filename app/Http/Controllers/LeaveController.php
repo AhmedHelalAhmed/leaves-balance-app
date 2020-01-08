@@ -24,10 +24,12 @@ class LeaveController extends Controller
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
+     * TODO return view with the data
      */
     public function index(User $boss)
     {
-        return $this->leaveRepository->all($boss);
+        $leavesOfUsers=$this->leaveRepository->all($boss);
+        return $leavesOfUsers;
     }
 
     /**

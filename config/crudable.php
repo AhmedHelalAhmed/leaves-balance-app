@@ -10,7 +10,7 @@ return [
     | With this setting you can enable the use of auto binding or disable it.
     | The auto bindings need to be set below
     */
-    'use_auto_binding' => false,
+    'use_auto_binding' => true,
 
     /*
     |--------------------------------------------------------------------------
@@ -49,7 +49,7 @@ return [
     'implementations' => [
         [
             'when' => \App\Repositories\LeaveRepository::class,
-            'needs' => Flobbos\Crudable\Contracts\Crud::class,
+            'needs' => \App\Contracts\LeaveCrud::class,
             'give' => \App\Services\LeaveService::class,
         ]
     ],
