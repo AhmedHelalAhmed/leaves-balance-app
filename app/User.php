@@ -57,4 +57,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Leave::class);
     }
+
+    public function bossLeaves()
+    {
+        return $this->hasMany(Leave::class,'assigned_id');
+    }
 }

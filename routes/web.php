@@ -12,5 +12,9 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+dd('Hello');
+
 });
+
+Route::resource('bosses.users.leaves', 'LeaveController')->except('index');
+Route::resource('bosses.leaves', 'LeaveController')->only('index');// first route

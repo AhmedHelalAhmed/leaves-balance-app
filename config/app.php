@@ -166,6 +166,7 @@ return [
          * Package Service Providers...
          */
         Flobbos\Crudable\CrudableServiceProvider::class,
+        App\Providers\RepositoryServiceProvider::class,
 
         /*
          * Application Service Providers...
