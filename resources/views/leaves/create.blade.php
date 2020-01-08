@@ -1,14 +1,16 @@
 @extends('layouts.master')
 
 @section('content')
-<div class="container">
-    <div class="row">
-        <div class="col-sm-12">
-            <div class="card">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="card">
 
 
                     <div class="card-header">
-                        <h5>Request leave</h5>
+                        <h5>Request leave <small class="float-right">You have <span
+                                    class="badge badge-primary">{{ $user->balance_of_leaves }}</span> Days</small>
+                        </h5>
                     </div>
 
                     <div class="card-body">
@@ -24,9 +26,9 @@
                     </div>
 
 
+                </div>
             </div>
-        </div>
 
+        </div>
     </div>
-</div>
 @stop
