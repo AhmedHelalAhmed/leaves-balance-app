@@ -16,7 +16,12 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name',
+        'email',
+        'password',
+        'user_id',
+        'type',
+        'balance_of_leaves'
     ];
 
     /**
@@ -36,4 +41,20 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function boss()
+    {
+        return $this->belongsTo(User::class,'user_id');
+    }
+
+    public function employees()
+    {
+        return $this->hasMany(User::class,'user_id');
+    }
+
+
+    public function leaves()
+    {
+        return $this->hasMany(Leave::class);
+    }
 }
