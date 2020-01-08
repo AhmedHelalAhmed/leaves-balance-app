@@ -57,17 +57,16 @@ class LeaveController extends Controller
     {
 
         try {
-
-            return redirect()->route('bosses.users.leaves.show',
+            $this->leaveRepository->create(
+                array_merge($request->validated(), [
+                    'user_id' => $user->id,
+                    'assigned_id' => $user->boss->id,
+                ])
+            );
+            return redirect()->route('bosses.leaves.index',
                 [
                     $user->boss->id,
-                    $user->id,
-                    $this->leaveRepository->create(
-                        array_merge($request->validated(), [
-                            'user_id' => $user->id,
-                            'assigned_id' => $user->boss->id,
-                        ])
-                    )->id
+                    $user->id
                 ])->withMessage(trans('crud.record_created'));
 
         } catch (Exception $ex) {
@@ -91,11 +90,9 @@ class LeaveController extends Controller
     {
         try {
             $this->leaveRepository->update($leaf, $request->validated());
-            return redirect()->route('bosses.users.leaves.show',
+            return redirect()->route('bosses.leaves.index',
                 [
                     $boss->id,
-                    $user->id,
-                    $leaf->id
                 ]
             )->withMessage(trans('crud.record_updated'));
         } catch (Exception $ex) {

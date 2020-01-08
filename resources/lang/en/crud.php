@@ -1,6 +1,6 @@
 <?php
 
-//Standard CRUD 
+//Standard CRUD
 //English - EN
 
 return [
@@ -17,8 +17,8 @@ return [
     //List
     'no_entries' => 'No entries found.',
     //Messages
-    'record_created' => 'A new entry has been successfully created.',
-    'record_updated' => 'The entry has been successfully updated.',
+    'record_created' => 'Successfully created.',
+    'record_updated' => 'Successfully updated.',
     'record_deleted' => 'The entry was removed successfully',
     //File error
     'invalid_file_upload' => 'A problem was encountered during the file upload'
