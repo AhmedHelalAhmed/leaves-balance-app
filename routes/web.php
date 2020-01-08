@@ -16,5 +16,7 @@ dd('Hello');
 
 });
 
-Route::resource('bosses.users.leaves', 'LeaveController')->except('index');
+Route::resource('bosses.users.leaves', 'LeaveController')->only('show');// second route
 Route::resource('bosses.leaves', 'LeaveController')->only('index');// first route
+Route::resource('users.leaves', 'LeaveController')->only('create','store');// third route
+

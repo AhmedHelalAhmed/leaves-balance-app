@@ -3,9 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Contracts\LeaveRepositoryInterface;
+use App\Http\Requests\StoreLeaveRequest;
 use App\Leave;
 use App\User;
-use Illuminate\Http\Request;
+use Exception;
 
 class LeaveController extends Controller
 {
@@ -36,21 +37,37 @@ class LeaveController extends Controller
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
+     * @todo return view
      */
-    public function create()
+    public function create(User $user)
     {
-        //
+
+        dd('return view ',$user);
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param User $user
+     * @param StoreLeaveRequest $request
+     * @return \Illuminate\Http\RedirectResponse
+     *
      */
-    public function store(Request $request)
+    public function store(User $user,StoreLeaveRequest $request)
     {
-        //
+
+        try{
+
+            return redirect()->route('bosses.users.leaves.show',
+                [
+                    $user->boss()->id,
+                    $user->id,
+                    $this->leaveRepository->create($request->validated())->id
+                ])->withMessage(trans('crud.record_created'));
+
+        } catch (Exception $ex) {
+            return redirect()->back()->withErrors($ex->getMessage())->withInput();
+        }
     }
 
     /**
@@ -59,42 +76,8 @@ class LeaveController extends Controller
      * @param  \App\Leave  $leave
      * @return \Illuminate\Http\Response
      */
-    public function show(Leave $leave)
+    public function show(User $boss,User $user,Leave $leaf)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Leave  $leave
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Leave $leave)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Leave  $leave
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Leave $leave)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Leave  $leave
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Leave $leave)
-    {
-        //
+        return $leaf;
     }
 }

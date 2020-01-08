@@ -24,4 +24,9 @@ class LeaveRepository implements LeaveRepositoryInterface
     {
         return $this->leave->getLeavesOfUsersOfTheBoss($boss);
     }
+
+    public function create($data)
+    {
+        return $this->leave->create($data);
+    }
 }
