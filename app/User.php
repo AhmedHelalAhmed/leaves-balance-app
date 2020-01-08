@@ -60,6 +60,8 @@ class User extends Authenticatable
 
     public function bossLeaves()
     {
-        return $this->hasMany(Leave::class,'assigned_id');
+        return $this
+            ->hasMany(Leave::class,'assigned_id')
+            ->orderBy('created_at', 'DESC');
     }
 }

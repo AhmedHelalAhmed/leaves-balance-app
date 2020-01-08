@@ -25,6 +25,10 @@
                                 <th scope="row">{{ $leaf->user->name }}</th>
                             </tr>
                             <tr>
+                                <th scope="col">Leaves credit</th>
+                                <th scope="row">{{ $leaf->user->balance_of_leaves }}</th>
+                            </tr>
+                            <tr>
                                 <th scope="col">From</th>
                                 <th scope="row">{{ $leaf->from_date }}</th>
                             </tr>
