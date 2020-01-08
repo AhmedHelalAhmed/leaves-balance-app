@@ -6,37 +6,23 @@
         <div class="col-sm-12">
             <div class="card">
 
-                <form action="{{ route('admin.leaves.store') }}" role="form" method="POST"  enctype="multipart/form-data">
-                    {{ csrf_field() }}
 
                     <div class="card-header">
-                        <h5><!-- insert title here --></h5>
-                        @lang('crud.create_headline')
+                        <h5>Request leave</h5>
                     </div>
 
                     <div class="card-body">
 
                         @include('crudable::notifications')
 
-                    </div>
+                        <create-leave-component
+                            :action="{{ json_encode(route('users.leaves.store',$user->id)) }}"
+                            :csrf="{{ json_encode(csrf_token()) }}"
 
-                    <div class="card-footer">
-
-                        <div class="row">
-
-                            <div class="col-sm-6">
-                                <a href="{{ route('admin.leaves.index') }}" class="btn btn-danger">{{ trans('crud.cancel') }}</a>
-                            </div>
-
-                            <div class="col-sm-6 text-right">
-                                <button type="submit" class="btn btn-success">{{ trans('crud.save') }}</button>
-                            </div>
-
-                        </div>
+                        ></create-leave-component>
 
                     </div>
 
-                </form>
 
             </div>
         </div>

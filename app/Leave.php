@@ -33,4 +33,32 @@ class Leave extends Model
     }
 
 
+    public function getType()
+    {
+
+        if($this->type===1)
+        {
+            return 'Casual';
+        }
+
+
+        return 'Planned leaves';
+    }
+
+
+    public function getStatus()
+    {
+
+        if(is_null($this->status))
+        {
+            return null;
+        }
+        if($this->status)
+        {
+            return 'Approved';
+        }
+
+        return 'Not Approved';
+    }
+
 }

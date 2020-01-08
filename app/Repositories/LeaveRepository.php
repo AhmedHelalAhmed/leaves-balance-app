@@ -29,4 +29,10 @@ class LeaveRepository implements LeaveRepositoryInterface
     {
         return $this->leave->create($data);
     }
+
+    public function update($leaf,$data)
+    {
+        return $this->leave->update($leaf->id, $data);
+    }
+
 }

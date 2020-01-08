@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Contracts\LeaveRepositoryInterface;
 use App\Http\Requests\StoreLeaveRequest;
+use App\Http\Requests\UpdateLeaveRequest;
 use App\Leave;
 use App\User;
 use Exception;
@@ -29,8 +30,8 @@ class LeaveController extends Controller
      */
     public function index(User $boss)
     {
-        $leavesOfUsers=$this->leaveRepository->all($boss);
-        return view('leaves.index',['leaves'=>$leavesOfUsers]);
+        $leavesOfUsers = $this->leaveRepository->all($boss);
+        return view('leaves.index', ['leaves' => $leavesOfUsers]);
     }
 
     /**
@@ -41,8 +42,7 @@ class LeaveController extends Controller
      */
     public function create(User $user)
     {
-
-        dd('return view ',$user);
+        return view('leaves.create', ['user' => $user]);
     }
 
     /**
@@ -53,16 +53,21 @@ class LeaveController extends Controller
      * @return \Illuminate\Http\RedirectResponse
      *
      */
-    public function store(User $user,StoreLeaveRequest $request)
+    public function store(User $user, StoreLeaveRequest $request)
     {
 
-        try{
+        try {
 
             return redirect()->route('bosses.users.leaves.show',
                 [
-                    $user->boss()->id,
+                    $user->boss->id,
                     $user->id,
-                    $this->leaveRepository->create($request->validated())->id
+                    $this->leaveRepository->create(
+                        array_merge($request->validated(), [
+                            'user_id' => $user->id,
+                            'assigned_id' => $user->boss->id
+                        ])
+                    )->id
                 ])->withMessage(trans('crud.record_created'));
 
         } catch (Exception $ex) {
@@ -72,12 +77,29 @@ class LeaveController extends Controller
 
     /**
      * Display the specified resource.
-     *
-     * @param  \App\Leave  $leave
-     * @return \Illuminate\Http\Response
+     * @param User $boss
+     * @param User $user
+     * @param Leave $leaf
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function show(User $boss,User $user,Leave $leaf)
+    public function show(User $boss, User $user, Leave $leaf)
     {
-        return $leaf;
+        return view('leaves.show', ['leaf' => $leaf]);
+    }
+
+    public function update(User $boss, User $user, Leave $leaf, UpdateLeaveRequest $request)
+    {
+        try {
+            $this->leaveRepository->update($leaf, $request->validated());
+            return redirect()->route('bosses.users.leaves.show',
+                [
+                    $boss->id,
+                    $user->id,
+                    $leaf->id
+                ]
+            )->withMessage(trans('crud.record_updated'));
+        } catch (Exception $ex) {
+            return redirect()->back()->withInput()->withErrors($ex->getMessage());
+        }
     }
 }
