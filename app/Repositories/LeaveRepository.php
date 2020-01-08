@@ -4,6 +4,7 @@
 namespace App\Repositories;
 use App\Contracts\LeaveCrud;
 use App\Contracts\LeaveRepositoryInterface;
+use App\Events\LeaveCreated;
 use Flobbos\Crudable\Contracts\Crud;
 
 class LeaveRepository implements LeaveRepositoryInterface
@@ -32,6 +33,10 @@ class LeaveRepository implements LeaveRepositoryInterface
 
     public function update($leaf,$data)
     {
+       if($data['status'])
+       {
+           event(new LeaveCreated($leaf));
+       }
         return $this->leave->update($leaf->id, $data);
     }
 

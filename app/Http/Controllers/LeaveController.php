@@ -65,7 +65,7 @@ class LeaveController extends Controller
                     $this->leaveRepository->create(
                         array_merge($request->validated(), [
                             'user_id' => $user->id,
-                            'assigned_id' => $user->boss->id
+                            'assigned_id' => $user->boss->id,
                         ])
                     )->id
                 ])->withMessage(trans('crud.record_created'));
