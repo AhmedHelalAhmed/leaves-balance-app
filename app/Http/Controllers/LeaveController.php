@@ -30,7 +30,7 @@ class LeaveController extends Controller
     public function index(User $boss)
     {
         $leavesOfUsers=$this->leaveRepository->all($boss);
-        return $leavesOfUsers;
+        return view('leaves.index',['leaves'=>$leavesOfUsers]);
     }
 
     /**
